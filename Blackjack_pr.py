@@ -69,4 +69,5 @@ while True:
   if play_again == "yes":
      calculate_score(cards)
   else:
+     print("see you next time.")
      quit()
