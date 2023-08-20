@@ -301,11 +301,47 @@ data = [
     }
 ]
 import random
-account_a = random.choice(data)
-account_b = random.choice(data)
+import os
+def system():
+    os.system(cls)
+
+def account_details(account):
+    name = account["name"]
+    description = account["description"]
+    country = account["country"]
+    return f"{name}, a {description}, from {country}"
+def check_answer(user_guess, a_followers, b_followers):
+    if a_followers > b_followers:
+        return user_guess == "a"
+    else:
+        return user_guess == "b"
+
+def game():
+    score = 0
+    game_continue = True
+    account_a = random.choice(data)
+    account_b = random.choice(data)
+    while game_continue:
+        account_a = account_b
+        account_b = random.choice(data)
+        while account_a == account_b:
+            account_b = random.choice(data)
+        print(f"Compare A: {account_details(account_a)}")
+        print("Vs")
+        print(f"aganist B: {account_details(account_b)}")
+        user_guess = input("Who has more followers : Type 'A' or 'B':").lower()
+        account_a_count = account_a["follower_count"]
+        account_b_count = account_b["follower_count"]
+        is_correct = check_answer(user_guess, account_a_count, account_b_count)
+
+        system
+        if is_correct:
+            score += 1
+            print(f"You're right! Current score: {score}.")
+        else:
+            game_continue = False
+            print(f"Sorry, that's wrong. Final score: {score}")
+
+game()
 
 
-
-#print(f"Compare A: {user},a {description}, from {country} \n")
-#print("Vs\n")
-#print(f"Aganist B: {user}, a {description}, from {country}")
