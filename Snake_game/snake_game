@@ -1,0 +1,51 @@
+from turtle import Screen
+import time
+from class_Snake import snake
+from Food import food
+from scoreboard import Score
+
+
+screen = Screen()
+screen.setup(width = 600 , height = 600)
+screen.bgcolor("black")
+screen.title("Snake_Game")
+screen.tracer(0)
+
+
+class_Snake = snake() 
+Food = food()
+scoreboard = Score()
+
+screen.listen()
+screen.onkey(class_Snake.up,"e")
+screen.onkey(class_Snake.down,"d")
+screen.onkey(class_Snake.left,"s")
+screen.onkey(class_Snake.right,"f")
+
+is_game_on = True
+while is_game_on:
+    screen.update()
+    time.sleep(0.1)
+    class_Snake.move()
+    if class_Snake.head.distance(Food) < 15:
+        Food.refresh()
+        class_Snake.extend()
+        scoreboard.increase_score()
+
+    if class_Snake.head.xcor()> 280 or class_Snake.head.xcor() <-280 or class_Snake.head.ycor() >280 or class_Snake.head.ycor() <-280:
+        is_game_on = False
+        scoreboard.game_over()
+    
+    for segment in class_Snake.segments[1:]:
+        if class_Snake.head.distance(segment) < 10:
+            is_game_on = False
+            scoreboard.game_over()
+
+
+
+
+
+
+
+
+screen.exitonclick()
